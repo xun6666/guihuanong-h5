@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>茶颜悦色·桂花弄 秋季限定新品</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 背景音乐 -->
+    <audio id="bgMusic" loop autoplay>
+        <source src="music/bg-music.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- 音乐控制按钮 -->
+    <div class="music-toggle" id="musicToggle">
+        <span class="music-icon">🎵</span>
+    </div>
+
+    <!-- 页面容器 -->
+    <div class="page-container" id="pageContainer">
+        
+        <!-- 第1页：开场动画页 -->
+        <div class="page page-1 active" data-page="1">
+            <canvas id="sakuraCanvas"></canvas>
+            <div class="page-content">
+                <div class="logo fade-in">
+                    <img src="images/Log.jpg" alt="茶颜悦色">
+                    <h1>茶颜悦色</h1>
+                </div>
+                <div class="title breathing">
+                    <h2>桂花弄·秋季限定</h2>
+                    <p class="subtitle">一口秋意，满口桂香</p>
+                </div>
+                <div class="swipe-tip float-up-down">
+                    <p>向上滑动进入</p>
+                    <span class="arrow">↑</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第2页：产品展示页 -->
+        <div class="page page-2" data-page="2">
+            <canvas class="page-canvas"></canvas>
+            <div class="page-content">
+                <h2 class="page-title">秋季限定新品</h2>
+                <div class="divider"></div>
+                <div class="product-image scale-in">
+                    <img src="images/桂花奶茶.jpg" alt="桂花弄奶茶" class="product-photo">
+                </div>
+                <h3 class="product-name">桂花弄奶茶</h3>
+                <p class="product-slogan">🌸 一口秋意满口香 🌸</p>
+                <p class="product-price">¥<span class="price-num">19.9</span></p>
+                <button class="btn-primary ripple" onclick="showToast('请到线下门店购买')">立即购买</button>
+            </div>
+        </div>
+
+        <!-- 第3页：原料溯源页 -->
+        <div class="page page-3" data-page="3">
+            <canvas class="page-canvas"></canvas>
+            <div class="page-content">
+                <h2 class="page-title">匠心选材·追本溯源</h2>
+                <div class="divider"></div>
+                
+                <p class="source-intro">桂花来自中国最优质的产区，每一朵都经过精心挑选</p>
+                
+                <div class="map-container slide-in-right">
+                    <div class="china-map with-photo">
+                        <img src="images/杭州西湖.jpg" alt="杭州西湖" class="xihu-bg">
+                        <div class="map-overlay">
+                            <div class="map-marker pulse">
+                                <span class="marker-dot"></span>
+                                <span class="marker-label">杭州西湖</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-cards">
+                    <div class="info-card slide-in-bottom" style="animation-delay: 0.2s">
+                        <div class="card-icon">📍</div>
+                        <h4>原产地</h4>
+                        <p class="card-main">杭州西湖金桂</p>
+                        <p class="card-detail">金桂之乡，香气浓郁</p>
+                    </div>
+                    <div class="info-card slide-in-bottom" style="animation-delay: 0.4s">
+                        <div class="card-icon">🌸</div>
+                        <h4>采摘时间</h4>
+                        <p class="card-main">清晨5-7点</p>
+                        <p class="card-detail">露水初现，香气最佳</p>
+                    </div>
+                    <div class="info-card slide-in-bottom" style="animation-delay: 0.6s">
+                        <div class="card-icon">⚙️</div>
+                        <h4>制作工艺</h4>
+                        <p class="card-main">传统窨制</p>
+                        <p class="card-detail">七次窨花，十二道工序</p>
+                    </div>
+                </div>
+                
+                <div class="source-features">
+                    <div class="feature-item">✓ 手工采摘，朵朵精选</div>
+                    <div class="feature-item">✓ 当天采摘，当天制作</div>
+                    <div class="feature-item">✓ 无添加剂，天然香气</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第4页：产品成分页 -->
+        <div class="page page-4" data-page="4">
+            <canvas class="page-canvas"></canvas>
+            <div class="page-content">
+                <h2 class="page-title">每一步都是用心</h2>
+                <div class="divider"></div>
+                
+                <p class="process-intro">传统手工工艺，现代精准配比，成就每一杯完美</p>
+                
+                <div class="making-process">
+                    <div class="process-animation" id="processAnimation">
+                        <div class="ingredient ingredient-1">🌸</div>
+                        <div class="ingredient ingredient-2">🫖</div>
+                        <div class="ingredient ingredient-3">🥛</div>
+                        <div class="ingredient ingredient-4">🧊</div>
+                    </div>
+                    <div class="process-steps">
+                        <div class="step">
+                            <span class="step-num">1</span>
+                            <span class="step-name">桂花</span>
+                        </div>
+                        <div class="step">
+                            <span class="step-num">2</span>
+                            <span class="step-name">茶底</span>
+                        </div>
+                        <div class="step">
+                            <span class="step-num">3</span>
+                            <span class="step-name">鲜奶</span>
+                        </div>
+                        <div class="step">
+                            <span class="step-num">4</span>
+                            <span class="step-name">冰块</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <p class="ingredients-title">优质原料配比</p>
+                
+                <div class="ingredients-info">
+                    <div class="ingredient-item" onclick="showIngredientDetail('桂花', '精选杭州西湖金桂，清香怡人，甜而不腻。每100ml使用3-5朵完整桂花，保证香气浓郁持久。')">
+                        <span class="icon">🌸</span>
+                        <div class="info">
+                            <h4>桂花</h4>
+                            <p>西湖金桂 | 3-5朵/100ml</p>
+                            <p class="detail-tip">点击查看详情</p>
+                        </div>
+                    </div>
+                    <div class="ingredient-item" onclick="showIngredientDetail('红茶', '选用云南滇红茶底，醇厚回甘，茶香浓郁。冷泡12小时释放茶多酚，口感更加丝滑。')">
+                        <span class="icon">🫖</span>
+                        <div class="info">
+                            <h4>红茶</h4>
+                            <p>云南滇红 | 冷泡12h</p>
+                            <p class="detail-tip">点击查看详情</p>
+                        </div>
+                    </div>
+                    <div class="ingredient-item" onclick="showIngredientDetail('鲜奶', '100%纯鲜奶，不添加奶精。香滑细腻，营养丰富。每天新鲜配送，当日使用。')">
+                        <span class="icon">🥛</span>
+                        <div class="info">
+                            <h4>鲜奶</h4>
+                            <p>100%纯鲜奶 | 当日配送</p>
+                            <p class="detail-tip">点击查看详情</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn-secondary" onclick="nextPage()">继续探索</button>
+            </div>
+        </div>
+
+        <!-- 第5页：互动游戏页 -->
+        <div class="page page-5" data-page="5">
+            <canvas class="page-canvas"></canvas>
+            <div class="page-content">
+                <h2 class="page-title">摇一摇砸金蛋</h2>
+                <div class="divider"></div>
+                <p class="game-subtitle">惊喜享不停</p>
+                <div class="eggs-container" id="eggsContainer">
+                    <div class="egg" onclick="smashEgg(0)">
+                        <div class="egg-shell">🥚</div>
+                    </div>
+                    <div class="egg" onclick="smashEgg(1)">
+                        <div class="egg-shell">🥚</div>
+                    </div>
+                    <div class="egg" onclick="smashEgg(2)">
+                        <div class="egg-shell">🥚</div>
+                    </div>
+                </div>
+                <p class="game-tip">点击任意金蛋或摇动手机砸金蛋</p>
+                <p class="game-tip small">每人每天1次机会，请选择一个金蛋</p>
+                <button class="btn-primary" id="shakeBtn" onclick="enableShake()">开始游戏</button>
+            </div>
+        </div>
+
+        <!-- 第6页：用户评价页 -->
+        <div class="page page-6" data-page="6">
+            <canvas class="page-canvas"></canvas>
+            <div class="page-content">
+                <h2 class="page-title">⭐ 顾客好评 ⭐</h2>
+                <div class="divider"></div>
+                <div class="reviews-container" id="reviewsContainer">
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="user-avatar">👩</div>
+                            <div class="user-info">
+                                <h4>小红书用户A</h4>
+                                <div class="stars">⭐⭐⭐⭐⭐</div>
+                            </div>
+                        </div>
+                        <p class="review-text">"桂花香味太正了，不是那种香精味，很天然！秋天喝这个太应景了！"</p>
+                        <div class="review-images">
+                            <img src="images/1.jpeg" alt="用户晒图" class="review-photo">
+                        </div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="user-avatar">👨</div>
+                            <div class="user-info">
+                                <h4>抖音用户B</h4>
+                                <div class="stars">⭐⭐⭐⭐⭐</div>
+                            </div>
+                        </div>
+                        <p class="review-text">"颜值超高，拍照超好看，味道也不错！茶颜悦色永远的神！"</p>
+                        <div class="review-images">
+                            <img src="images/2.jpeg" alt="用户晒图" class="review-photo">
+                            <img src="images/3.jpeg" alt="用户晒图" class="review-photo">
+                        </div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="user-avatar">👧</div>
+                            <div class="user-info">
+                                <h4>微博用户C</h4>
+                                <div class="stars">⭐⭐⭐⭐⭐</div>
+                            </div>
+                        </div>
+                        <p class="review-text">"秋天的第一杯奶茶，必须是茶颜悦色的桂花弄！好喝到转圈圈～"</p>
+                        <div class="review-images">
+                            <img src="images/4.jpeg" alt="用户晒图" class="review-photo">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第7页：门店地图页 -->
+        <div class="page page-7" data-page="7">
+            <canvas class="page-canvas"></canvas>
+            <div class="page-content">
+                <h2 class="page-title">就在你身边</h2>
+                <div class="divider"></div>
+                <div class="map-display">
+                    <img src="images/地图.png" alt="茶颜悦色门店地图" class="map-image">
+                </div>
+                <div class="store-list">
+                    <div class="store-item">
+                        <div class="store-info">
+                            <h4>📍 解放西路店</h4>
+                            <p class="distance">距您 1.2km</p>
+                            <p class="hours">营业至 22:00 · <span class="status-open">营业中</span></p>
+                        </div>
+                    </div>
+                    <div class="store-item">
+                        <div class="store-info">
+                            <h4>📍 五一广场店</h4>
+                            <p class="distance">距您 2.5km</p>
+                            <p class="hours">营业至 22:00 · <span class="status-open">营业中</span></p>
+                        </div>
+                    </div>
+                    <div class="store-item">
+                        <div class="store-info">
+                            <h4>📍 黄兴路步行街店</h4>
+                            <p class="distance">距您 3.8km</p>
+                            <p class="hours">营业至 22:00 · <span class="status-open">营业中</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第8页：结束引导页 -->
+        <div class="page page-8" data-page="8">
+            <canvas id="sakuraCanvas2"></canvas>
+            <div class="page-content">
+                <h2 class="page-title">感谢您的观看</h2>
+                <p class="thanks-text">期待与您相遇</p>
+                <div class="qrcode-container">
+                    <div class="qrcode scan-animation">
+                        <img src="images/edb06d886635193cade81d0747a7a1f6.png" alt="茶颜悦色公众号" class="qrcode-img">
+                    </div>
+                    <p class="qr-tip">扫码关注我们</p>
+                </div>
+                <div class="offer-box">
+                    <h3>新人专享</h3>
+                    <p class="offer-text">立减 <span class="price">5元</span></p>
+                </div>
+                <button class="btn-primary btn-large" onclick="followNow()">立即关注领取</button>
+                <p class="copyright">© 2025 茶颜悦色</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 提示弹窗 -->
+    <div class="toast" id="toast"></div>
+
+    <!-- 成分详情弹窗 -->
+    <div class="modal" id="ingredientModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h3 id="modalTitle"></h3>
+            <p id="modalText"></p>
+        </div>
+    </div>
+
+    <!-- 奖品弹窗 -->
+    <div class="modal prize-modal" id="prizeModal">
+        <div class="modal-content">
+            <div class="prize-icon">🎉</div>
+            <h3>恭喜您</h3>
+            <p id="prizeText"></p>
+            <button class="btn-primary" onclick="closePrizeModal()">立即使用</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

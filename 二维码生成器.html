@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二维码生成器 - 桂花弄H5</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 600;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .size-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .size-option {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .size-option input[type="radio"] {
+            display: none;
+        }
+        
+        .size-option label {
+            display: block;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .size-option input[type="radio"]:checked + label {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+        
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-bottom: 10px;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        #qrcodeContainer {
+            display: none;
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px dashed #e0e0e0;
+        }
+        
+        #qrcode {
+            display: inline-block;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .download-btn {
+            margin-top: 20px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .tip {
+            background: #f0f7ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #555;
+        }
+        
+        .examples {
+            background: #fff9e6;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+        
+        .examples h3 {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .examples ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .examples li {
+            padding: 5px 0;
+            color: #667eea;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        
+        .examples li:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 二维码生成器</h1>
+        <p class="subtitle">为您的桂花弄H5项目生成二维码</p>
+        
+        <div class="tip">
+            💡 <strong>提示：</strong>请输入您部署后的网站链接。如果还没部署，请先参考"部署指南"文件。
+        </div>
+        
+        <div class="input-group">
+            <label for="urlInput">📎 输入网站链接</label>
+            <input type="text" id="urlInput" placeholder="例如：https://your-project.vercel.app" />
+        </div>
+        
+        <div class="input-group">
+            <label>📏 选择二维码大小</label>
+            <div class="size-group">
+                <div class="size-option">
+                    <input type="radio" id="size128" name="size" value="128">
+                    <label for="size128">小<br>(128px)</label>
+                </div>
+                <div class="size-option">
+                    <input type="radio" id="size256" name="size" value="256" checked>
+                    <label for="size256">中<br>(256px)</label>
+                </div>
+                <div class="size-option">
+                    <input type="radio" id="size512" name="size" value="512">
+                    <label for="size512">大<br>(512px)</label>
+                </div>
+            </div>
+        </div>
+        
+        <button onclick="generateQRCode()">🎨 生成二维码</button>
+        
+        <div class="examples">
+            <h3>📌 常用部署平台链接示例：</h3>
+            <ul>
+                <li onclick="fillExample('https://your-project.vercel.app')">• Vercel: https://your-project.vercel.app</li>
+                <li onclick="fillExample('https://guihuanong.surge.sh')">• Surge: https://guihuanong.surge.sh</li>
+                <li onclick="fillExample('https://username.github.io/guihuanong-h5')">• GitHub Pages: https://username.github.io/guihuanong-h5</li>
+                <li onclick="fillExample('https://your-project.netlify.app')">• Netlify: https://your-project.netlify.app</li>
+            </ul>
+        </div>
+        
+        <div id="qrcodeContainer">
+            <div id="qrcode"></div>
+            <button class="download-btn" onclick="downloadQRCode()">💾 下载二维码</button>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script>
+        let qrcodeObj = null;
+        
+        function fillExample(url) {
+            document.getElementById('urlInput').value = url;
+        }
+        
+        function generateQRCode() {
+            const url = document.getElementById('urlInput').value.trim();
+            
+            if (!url) {
+                alert('⚠️ 请输入网站链接！');
+                return;
+            }
+            
+            // 简单的URL验证
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                alert('⚠️ 链接格式不正确，请以 http:// 或 https:// 开头');
+                return;
+            }
+            
+            const size = parseInt(document.querySelector('input[name="size"]:checked').value);
+            
+            // 清除旧的二维码
+            document.getElementById('qrcode').innerHTML = '';
+            
+            // 生成新的二维码
+            qrcodeObj = new QRCode(document.getElementById('qrcode'), {
+                text: url,
+                width: size,
+                height: size,
+                colorDark: '#000000',
+                colorLight: '#ffffff',
+                correctLevel: QRCode.CorrectLevel.H
+            });
+            
+            // 显示二维码容器
+            document.getElementById('qrcodeContainer').style.display = 'block';
+            
+            // 平滑滚动到二维码
+            setTimeout(() => {
+                document.getElementById('qrcodeContainer').scrollIntoView({ 
+                    behavior: 'smooth' 
+                });
+            }, 100);
+        }
+        
+        function downloadQRCode() {
+            const canvas = document.querySelector('#qrcode canvas');
+            if (!canvas) {
+                alert('⚠️ 请先生成二维码！');
+                return;
+            }
+            
+            // 转换为图片并下载
+            const url = canvas.toDataURL('image/png');
+            const link = document.createElement('a');
+            link.download = '桂花弄H5二维码.png';
+            link.href = url;
+            link.click();
+        }
+        
+        // 回车键生成二维码
+        document.getElementById('urlInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                generateQRCode();
+            }
+        });
+    </script>
+</body>
+</html>
+
