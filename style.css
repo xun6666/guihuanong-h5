@@ -1135,13 +1135,9 @@ body {
     }
 }
 
-.qr-url {
-    color: var(--primary-color);
-    font-size: 0.85rem;
-    margin-top: 10px;
-    font-family: 'Courier New', monospace;
-    letter-spacing: 0.5px;
-    opacity: 0.9;
+.qr-tip {
+    color: var(--light-beige);
+    font-size: 1rem;
 }
 
 .offer-box {
